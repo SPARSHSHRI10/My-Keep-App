@@ -2,15 +2,26 @@ import React from "react";
 import logo from "./Images/favicon.png";
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import ListIcon from '@material-ui/icons/List';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AppsIcon from '@material-ui/icons/Apps';
+import {  Button } from 'react-bootstrap'
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+import { useAuth } from './context/AuthContext';
+import { useHistory } from "react-router-dom"
 
 
 const Header = () => {
-    
 
+    const { logout } = useAuth()
+    const history = useHistory()
+
+    async function handleLogout(){
+
+        await logout()
+        history.push('/')
+        
+    }
+    
     return (
         <>
         <div className = "header">
@@ -21,25 +32,25 @@ const Header = () => {
             <div className="col-md-2 d-none-sm">
                 <ul className="headerIcons headerIcons list-style-none d-inline-block m-0 p-0">
                     <li className="list-style-none d-inline-block ml-5">
-                        <a href="#"><RefreshIcon /></a>
+                        <span><RefreshIcon /></span>
                     </li>
 
                     <li className="list-style-none d-inline-block ml-5">
-                        <a href="#" className="listIcon" ><ListIcon /></a> 
+                    <span><AppsIcon /></span>
                     </li>
                 </ul>
             </div>
             <div className="col-md-2 text-right d-none-sm">
                 <ul className="headIcons headIcons list-style-none d-inline-block m-0 p-0">
                     <li className="list-style-none d-inline-block ml-3">
-                        <a href="javascript;"><AccountCircleIcon /></a>
+                    <Button style={{marginTop : "4px" , marginRight:"4px"}} type="button" onClick={handleLogout}>Log Out</Button>
                     </li>
                     <li className="list-style-none d-inline-block ml-3">
-                            <a href="javascript;"><AppsIcon /></a>
+                    <span><AccountCircleIcon /></span>
                     </li>
 
                 </ul>
-            </div>  
+            </div>
         </div>
         </>
     )

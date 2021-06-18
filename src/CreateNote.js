@@ -2,6 +2,13 @@ import React,{useState} from 'react'
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
+const shadow = {
+    padding: "15px 10px 5px 10px",
+    boxShadow: "3px 5px 15px -5px",
+    borderRadius: "10px",
+    position: "relative"
+}
+
 const CreateNote = (props) => {
 
     const [expand,setExpand] = useState(false);
@@ -44,7 +51,7 @@ const CreateNote = (props) => {
     return (
         <>
         <div className = "main_note" onDoubleClick={backtonormal}>
-            <form>
+            <form style = {{minHeight : "50px" , ...shadow}}>
             {expand ?
                 <input className ="input1"  type = "text" value ={note.title} name = "title" onChange = {InputEvent} placeholder="Title" autoComplete="off" /> : null }
                 <textarea rows="" column="" value={note.content} name="content" onChange ={InputEvent} placeholder = "Take a Note..." onClick = {expandit} ></textarea>

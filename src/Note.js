@@ -15,9 +15,9 @@ const Note = (props) => {
             <h1> {props.title} </h1>
             <br />
             <p> {props.content} </p>
-            <button className="btn" onClick={deleteNote} >
+            <Button className="btn" onClick={deleteNote} >
                     <DeleteOutlineIcon className = "deleteIcon" />
-            </button>
+            </Button>
         </div>
     )
 }
