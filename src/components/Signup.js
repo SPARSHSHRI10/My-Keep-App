@@ -1,4 +1,5 @@
 import React , {useRef, useState} from 'react';
+import ap from '../firebase';
 import { Form , Card , Button ,Alert } from 'react-bootstrap'
 import { useAuth } from '../context/AuthContext';
 import { Container } from 'react-bootstrap';
@@ -8,6 +9,7 @@ const Signup = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordconfirmRef = useRef()
+    const usernameRef = useRef()
     const { signup } = useAuth()
     const [error,setError] = useState('')
     const [loading,setLoading] = useState(false);
@@ -19,6 +21,12 @@ const Signup = () => {
         if(passwordRef.current.value !== passwordconfirmRef.current.value){
             return setError('Passwords do not match')
         }
+
+        const db = ap.firestore();
+        db.collection("users").add({
+            email : emailRef.current.value,
+            username : usernameRef.current.value
+        })
 
         try {
             setError('')
@@ -52,6 +60,10 @@ const Signup = () => {
                         <Form.Group id = "password-confirm">
                             <Form.Label>Password Confirmation</Form.Label>
                             <Form.Control type = "password" ref={passwordconfirmRef} required />
+                        </Form.Group>
+                        <Form.Group id = "username">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type = "text" ref={usernameRef} required />
                         </Form.Group>
                         <br />
                         <Button disabled={ loading } className="w-100" type="submit">Sign Up</Button>

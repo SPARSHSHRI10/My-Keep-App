@@ -2,12 +2,34 @@ import React , { useState } from 'react'
 import Header from './Header';
 import Footer from './Footer';
 import CreateNote from './CreateNote';
+import ap from './firebase';
+import { useAuth } from './context/AuthContext';
 import './App.css';
 import Note from './Note';
+import { useEffect } from 'react';
 
 const BaseComp = () => {
 
     const [addItem,setAddItem] = useState([]);
+    const { currentUser } = useAuth();
+
+    useEffect(() => {
+      const items = [];
+      const db = ap.firestore();
+      db.collection("todos").get().then((todos) => {
+        // eslint-disable-next-line array-callback-return
+        todos.docs.map((todo) => {
+          if(todo.data().userid === currentUser.uid){
+            items.push({
+              content: todo.data().note,
+              title: todo.data().title
+            })
+          }
+        })
+        setAddItem(items);
+      })
+    }, [currentUser.uid])
+
     //adding items in array
     const addNote = (note) => {
 

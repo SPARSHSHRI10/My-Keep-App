@@ -1,5 +1,7 @@
 import React,{useState} from 'react'
 import Button from '@material-ui/core/Button';
+import ap from './firebase';
+import { useAuth } from './context/AuthContext'
 import AddIcon from '@material-ui/icons/Add';
 
 const shadow = {
@@ -12,6 +14,7 @@ const shadow = {
 const CreateNote = (props) => {
 
     const [expand,setExpand] = useState(false);
+    const { currentUser } = useAuth()
     const [note,setNote] = useState({
         title : "",
         content : "",
@@ -30,7 +33,17 @@ const CreateNote = (props) => {
         });
     };
 
-    const addEvent =() => {
+    const addEvent =(e) => {
+        e.preventDefault();
+
+        const db = ap.firestore();
+
+        db.collection('todos').add({
+            note : note.content,
+            title : note.title,
+            userid : currentUser.uid
+        })
+
         props.passNote(note);
         setNote (() => {
             return({
