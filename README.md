@@ -3,11 +3,17 @@ A web application built using React JS that enables to you to add, delete, modif
 
 # Technologies Used
 React
+
 Firebase
+
 Firestore
+
 HTML
+
 CSS
+
 Material UI
+
 React Router Dom
 
 # Live Version
